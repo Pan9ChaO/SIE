@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Dashboard Template for Bootstrap</title>
+
+        <script th:src="@{/js/jquery.slim.min.js}" type="text/javascript"></script>
+
+
+        <!--    <link th:href="@{/css/layui.css}" rel="stylesheet">-->
+        <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+        <script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+        <script th:src="@{/webjars/layui/2.5.7/layui.js}" type="text/javascript"></script>
+        <!--    <script th:src="@{/js/layui.js}" type="text/javascript"></script>-->
+        <script th:src="@{https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+
+
+
+        <!-- Bootstrap core CSS -->
+        <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+        <link rel="stylesheet" th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" id="bootstrap-css-css"  th:href="@{/css/bootstrap5152.css?ver=1.0}" type="text/css" media="all" />
+        <link rel="stylesheet" id="responsive-css-css"  th:href="@{/css/responsive5152.css?ver=1.0}" type="text/css" media="all" />
+
+        <link rel="stylesheet" id='main-css-css'  th:href="@{/css/main5152.css?ver=1.0}" type="text/css" media="all" />
+        <link rel="stylesheet" id='custom-css-css'  th:href="@{/css/custom5152.html?ver=1.0}" type="text/css" media="all" />
+
+        <!-- Custom styles for this template -->
+        <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+        <style type="text/css">
+                /* Chart.js */
+
+                @-webkit-keyframes chartjs-render-animation {
+                        from {
+                                opacity: 0.99
+                        }
+                        to {
+                                opacity: 1
+                        }
+                }
+
+                @keyframes chartjs-render-animation {
+                        from {
+                                opacity: 0.99
+                        }
+                        to {
+                                opacity: 1
+                        }
+                }
+
+                .chartjs-render-monitor {
+                        -webkit-animation: chartjs-render-animation 0.001s;
+                        animation: chartjs-render-animation 0.001s;
+                }
+        </style>
+</head>
+
+<body>
+<div th:replace="~{commons/commons::topbar}"></div>
+
+<div class="container-fluid">
+        <div class="row" >
+                <div th:replace="~{commons/commons::sidebar(active='articles-list.html')}"></div>
+
+
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                        <div class="page-container">
+                                <div class="container1">
+                                        <div class="row" style="margin-left: 110px;">
+
+                                                <!-- start of page content -->
+                                                <div class="span8 page-content">
+
+                                                        <ul class="breadcrumb">
+
+                                                                <li><a href="#" title="View all posts in Server &amp; Database">[[ ${article.tag} ]]</a> <span class="divider">/</span></li>
+                                                                <li class="active">[[ ${article.title} ]]</li>
+                                                        </ul>
+
+                                                        <article class=" type-post format-standard hentry clearfix">
+
+
+                                                                <h1 class="post-title">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-left" viewBox="0 0 16 16" style="width: 14px;height: 14px; margin-left: -40px; margin-right: 4px;">
+                                                                                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                                                        </svg>
+
+                                                                        <a href="#">[[ ${article.title} ]]</a></h1>
+
+                                                                <div class="post-meta clearfix">
+                                                                        <span class="author">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16" style="margin-left: -10px;margin-bottom: -2px;margin-right: 1px;">
+                                                                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                                                                </svg>[[ ${article.name} ]]
+												                        </span>
+                                                                        <span class="date">
+													                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-date" viewBox="0 0 16 16" style="margin-left: -10px;margin-bottom: -2px;margin-right: 4px;">
+  													                            	<path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
+  													                            	<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+													                            </svg>[[ ${article.date2} ]]
+                                                                        </span>
+                                                                        <span class="category">
+													                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag" viewBox="0 0 16 16" style="margin-left: -10px;margin-bottom: -2px;margin-right: -2px;">
+  													                            	<path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0z"/>
+  													                            	<path d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1zm0 5.586 7 7L13.586 9l-7-7H2v4.586z"/>
+													                            </svg>
+													                            <a href="#" title="View all posts in Server &amp; Database">
+													                            	[[ ${article.tag} ]]
+													                            </a>
+												                        </span>
+                                                                        <span class="comments">
+													                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16" style="margin-left: -10px;margin-bottom: -2px;margin-right: 1px;">
+  													                            	<path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+  													                            	<path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9.06 9.06 0 0 0 8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.437 10.437 0 0 1-.524 2.318l-.003.011a10.722 10.722 0 0 1-.244.637c-.079.186.074.394.273.362a21.673 21.673 0 0 0 .693-.125zm.8-3.108a1 1 0 0 0-.287-.801C1.618 10.83 1 9.468 1 8c0-3.192 3.004-6 7-6s7 2.808 7 6c0 3.193-3.004 6-7 6a8.06 8.06 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a10.97 10.97 0 0 0 .398-2z"/>
+													                            </svg>
+													                            <a href="#" title="Comment on Integrating WordPress with Your Website">
+													                            	[[ ${article.comNum} ]] Comments
+													                            </a>
+												                        </span>
+
+                                                                </div><!-- end of post meta -->
+
+                                                                <p>[[ ${article.context} ]]</p>
+
+
+
+
+
+
+
+
+                                                        </article>
+
+
+
+                                                        <section id="comments">
+
+                                                                <h3 id="comments-title">([[ ${article.comNum} ]]) Comments</h3>
+
+                                                                <ol  th:each="comment:${comments}" style="list-style: none;">
+                                                                        <div th:if="${comment.level} eq 1">
+                                                                        <li  th:if="${comment.articleId} eq ${article.id}">
+                                                                                <article id="comment-2" th:if="${comment.level} eq 1">
+
+
+
+                                                                                        <div class="comment-meta">
+
+                                                                                                <h5 class="author">
+                                                                                                        <cite class="fn">
+                                                                                                                <a href="#" rel="external nofollow" class="url">[[ ${comment.name} ]]</a>
+                                                                                                        </cite>
+                                                                                                        - <a class="comment-reply-link" href="#">Reply</a>
+                                                                                                </h5>
+
+                                                                                                <p class="date" style="margin-left: 10px;">
+                                                                                                        <a href="#">
+                                                                                                                <time datetime="2013-02-26T13:18:47+00:00" style="font-size: 10px;">[[ ${comment.date2} ]]</time>
+                                                                                                        </a>
+                                                                                                </p>
+
+                                                                                        </div><!-- end .comment-meta -->
+
+                                                                                        <div class="comment-body" style="margin-left: 12px;">
+
+                                                                                              <p>
+                                                                                                      <input type="hidden" th:value="|${comment.who},${comment.comId},${comment.name}|">
+                                                                                                      <a href="javascript:void(0);" onclick="onAClick(this)" id="test">[[ ${comment.comment} ]]</a>
+                                                                                              </p>
+
+                                                                                        </div><!-- end of comment-body -->
+
+                                                                                </article><!-- end of comment -->
+                                                                                <div  th:each="comm:${comments}"  th:if="${comm.level} eq 2">
+                                                                                <ul class="children">
+                                                                                        <div th:if="${comm.articleId} eq ${article.id}" style="margin-left: 40px;">
+                                                                                                <li  th:if="${comm.comId} eq ${comment.comId}" style="list-style: none;">
+                                                                                                        <article id="comment-3" >
+
+
+
+                                                                                                        <div class="comment-meta">
+
+                                                                                                                <h5 class="author">
+                                                                                                                        <cite class="fn">[[ ${comm.name} ]]</cite>
+                                                                                                                        - <a class="comment-reply-link" href="#">Reply</a>
+                                                                                                                        - <a class="comment-reply-link" href="#">[[ ${comm.toName} ]]</a>
+                                                                                                                </h5>
+
+                                                                                                                <p class="date" style="margin-left: 10px;">
+                                                                                                                        <a href="#">
+                                                                                                                                <time datetime="2013-02-26T13:20:14+00:00" style="font-size: 9px;">[[ ${comm.date2} ]]</time>
+                                                                                                                        </a>
+                                                                                                                </p>
+
+                                                                                                        </div><!-- end .comment-meta -->
+
+                                                                                                        <div class="comment-body" style="margin-left: 8px;">
+
+                                                                                                                <p>
+                                                                                                                        <input type="hidden" th:value="|${comm.who},${comm.comId},${comm.name}| ">
+                                                                                                                        <a href="javascript:void(0);" onclick="onAClick(this)">[[ ${comm.comment} ]]</a>
+                                                                                                                </p>
+
+
+                                                                                                        </div><!-- end of comment-body -->
+
+                                                                                                        </article><!-- end of comment -->
+
+                                                                                                </li>
+                                                                                        </div>
+                                                                                </ul>
+                                                                                </div>
+                                                                        </li>
+                                                                        </div>
+
+                                                                </ol>
+
+                                                                <div id="respond">
+
+                                                                        <h3>Reply&nbsp;<span id="replyName" style="color:blue;"></span></h3>
+
+                                                                        <div class="cancel-comment-reply">
+                                                                                <a rel="nofollow" id="cancel-comment-reply-link" href="#" style="display:none;">Click here to cancel reply.</a>
+                                                                        </div>
+
+
+                                                                        <form class="layui-form" action="" id="abc">
+
+
+
+
+
+
+                                                                                <div class="layui-form-item layui-form-text">
+
+                                                                                        <input type="hidden" id="comment" name="comment" value="">
+                                                                                        <input type="hidden" id="articleId" name="articleId" th:value="${article.id}">
+                                                                                        <input type="hidden" id="comId" name="comId" value="-1">
+                                                                                        <input type="hidden" id="level" name="level" value="1">
+                                                                                        <input type="hidden" id="toto" name="toto" th:value="${article.author}">
+
+
+                                                                                        <div class="layui-input-block" layui-input-blockstyle="margin-bottom: 20px; width: 500px;" style="margin-left: -10px;">
+                                                                                                <textarea  class="layui-textarea" id="LAY_demo2" ></textarea>
+
+
+
+
+                                                                                        </div>
+                                                                                </div>
+
+
+
+
+
+                                                                                <div class="layui-form-item">
+                                                                                        <div class="layui-input-block" style="margin-left: -10px;">
+                                                                                                <button class="layui-btn" lay-submit lay-filter="upload">Submit</button>
+
+                                                                                        </div>
+                                                                                </div>
+                                                                        </form>
+
+                                                                </div>
+
+                                                        </section><!-- end of comments -->
+
+                                                </div>
+                                                <!-- end of page content -->
+
+
+
+                                                <!-- end of sidebar -->
+                                        </div>
+                                </div>
+                        </div>
+                </main>
+        </div>
+</div>
+
+<script th:inline="javascript">
+
+
+
+        layui.use('layedit', function(){
+                var layedit = layui.layedit
+                        ,$ = layui.jquery,
+                        $$ = layui.$;
+
+
+                //自定义工具栏
+                var index= layedit.build('LAY_demo2', {
+                        tool: [
+                        ]
+
+
+                        ,height: 100
+                })
+
+
+
+
+                //编辑器外部操作
+
+
+                $('.layui-btn').on('click', function(){
+
+                        $$("#comment").attr("value",layedit.getContent(index));
+
+                });
+
+
+        });
+
+        layui.use('form', function(){
+                let form = layui.form;
+                let $ = layui.$;
+                //监听表单的提交
+                form.on('submit(upload)', function(data){
+
+                        $.ajax({
+                                url: "/group5/article/comment",
+                                method: "post",
+                                data: data.field,
+                                dataType: "JSON",
+                                success: function (res){
+                                        if (res == 1){
+                                                layer.msg("Commit Success !");
+                                                setTimeout(function(){
+                                                        window.location.href="/group5/single/[[${article.id}]]";
+                                                },500)
+                                        }else{
+                                                layer.msg("error.")
+                                        }
+                                }
+                        })
+
+
+                        return false;
+                });
+        });
+
+        function onAClick(obj){
+
+                window.location.href="#abc";
+               $("#level").val("2");
+              var sss =  $(obj).parent().children().prop('value');
+                var arr = sss.split(",")
+
+                $("#comId").val(arr[1]);
+                $("#toto").val(arr[0]);
+                $("#replyName").text("- "+arr[2]+" :");
+              console.log(arr);
+        }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <script th:src="@{/js/jquery.slim.min.js}" type="text/javascript"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/layui.css}" >
+    <script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/layui.js}" type="text/javascript"></script>
+    <script th:src="@{https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+        .btn{
+            float:left;
+            margin-right: 10px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/commons::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{commons/commons::sidebar(active='clubtt.html')}"></div>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <form class="layui-form" action="">
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">Search&nbsp;by</label>
+                        <div class="layui-input-inline">
+                            <select name="type" id="type">
+                                <option value="name" >name</option>
+                                <option value="author">president</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" name="content" id="content" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <button class="layui-btn" lay-submit lay-filter="search">Search</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </form>
+            <h2> <br><a class="btn btn-sm btn-success" th:href="@{/clubList}">add</a> <br><br> </h2>
+            <p style="color:red;line-height:30px;" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+            <div class="clubs" th:fragment="clubs">
+
+                <table class="layui-table">
+                    <colgroup>
+                        <col width="200">
+                        <col width="200">
+                        <col width="200">
+                        <col>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Club Name</th>
+                        <th>Members</th>
+                        <th>President</th>
+                        <th>description</th>
+                        <th>Operate</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="club:${clubs}">
+                        <td>[[ ${club.name} ]]</td>
+                        <td>[[ ${club.count} ]]/50</td>
+                        <td>[[ ${club.stuName} ]]</td>
+                        <td>[[ ${club.des} ]]
+
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" th:href="@{/club/add/}+${stuId}+${s}+${club.id}" th:if="${club.contain eq true}" style=" color:white; text-align: center; width: 60px; height: 31px">Join</a>
+                            <a class="btn btn-sm btn-primary"  th:if="${club.contain eq false}" style="background: grey; color:white;width: 60px; height: 31px">Joined</a>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+
+        </main>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    layui.use('layedit', function(){
+        var layedit = layui.layedit
+            ,$ = layui.jquery,
+            $$ = layui.$;
+
+
+        //自定义工具栏
+        var index= layedit.build('LAY_demo2', {
+            tool: [
+
+            ]
+
+
+            ,height: 100
+        })
+
+
+
+
+        //编辑器外部操作
+
+
+        $('.layui-btn').on('click', function(){
+
+            $$("#context").attr("value",layedit.getContent(index));
+
+        });
+
+
+    });
+
+    layui.use('form', function(){
+        let form = layui.form;
+        let $ = layui.$;
+        form.render();
+
+        //监听表单的提交
+        form.on('submit(search)', function(data){
+            // var data =  {"type": $("#type").val(),"content": $("#content").val()}
+
+            $.ajax({
+                url: "/group5/club/search",
+                method: "POST",
+                // contentType : 'application/json',
+                // data: JSON.stringify(data),
+                data: data.field,
+                // dataType: "JSON",
+                success: function (res){
+                    // layer.msg("Loading..");
+                    console.log(res);
+                    $(".clubs").html(res)
+
+                },
+                error: function (errorMsg) {
+                    alert(JSON.stringify(errorMsg));
+                }
+            })
+
+            return false;
+        });
+    });
+
+</script>
+
+</body>
+
+</html>

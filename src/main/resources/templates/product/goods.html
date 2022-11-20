@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+    <!-- jQuery and JavaScript Bundle with Popper -->
+    <script th:src="@{/js/jquery.slim.min.js}" type="text/javascript"></script>
+    <script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script th:src="@{/webjars/layui/2.5.7/layui.js}" type="text/javascript"></script>
+    <script th:src="@{https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+
+    <style type="text/css">
+        /* Chart.js */
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+        .good-container{
+            display: flex;
+            width: 100%;
+            flex-wrap:wrap;
+            justify-content:flex-start;
+        }
+        .good{
+            width:15%;
+            border-radius: 10px;
+            border:1px solid #eeeeee;
+            margin:30px;
+
+        }
+        .good:hover{
+            cursor: pointer;
+            box-shadow:2px 2px 10px #909090;
+        }
+        .good-img{
+            display: block;
+            width:80%;
+            height:200px;
+            margin:20px auto 10px;
+        }
+        .good-title{
+            width: 80%;
+            margin:10px auto;
+        }
+        .good-price{
+            width:80%;
+            margin:10px auto 20px;
+            font-size: 20px;
+            color:#007bff;
+        }
+        /*.detail-container{*/
+        /*    display: flex;*/
+        /*    flex-wrap:nowrap;*/
+        /*    justify-content:flex-start;*/
+        /*}*/
+        .good-img-item{
+            display: inline-block;
+            width: 400px;
+            height: 300px;
+            margin:20px auto;
+        }
+        .detail-right{
+            display: flex;
+            flex-direction:column;
+            justify-content: space-around;
+            margin-left:30px;
+            text-align: left;
+        }
+        .good-title-item{
+            font-size: 20px;
+            margin:0;
+        }
+        .good-price-item{
+            font-size: 20px;
+            color: #007BFF;
+            margin-left:30px;
+            float:left;
+        }
+        .good-describe-item{
+            font-size:20px;
+        }
+        .btn-add {
+            position: fixed;
+            right: 150px;
+            bottom: 120px;
+            width: 60px;
+            height: 60px;
+            line-height: 55px;
+            font-weight: bold;
+            border-radius: 50%;
+            background: #3EAD54;
+            text-align: center;
+            color: #ffffff;
+            font-size: 30px;
+            text-decoration: none !important;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 16px 0 rgba(0, 0, 0, 0.19);
+        }
+        .btn-add:hover{
+            color:white!important;
+            box-shadow: 0 6px 8px 0 rgba(0,0,0,0.24),0 8px 25px 0 rgba(0,0,0,0.19);
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/commons::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{commons/commons::sidebar(active='goods.html')}"></div>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4 main-container">
+
+            <form class="layui-form" action="">
+
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="type" id="type" value="name" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <input type="text" name="content" id="content" placeholder="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <button class="layui-btn" lay-submit lay-filter="search">Search</button>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+            </form>
+
+            <a class="btn-add" th:href="@{/tran}">+</a>
+
+
+            <div class="info" th:fragment="info">
+            <div class="good-container" >
+                <div class="good"  th:each="info1:${info}">
+                    <div data-toggle="modal"  data-whatever="" th:data-target="${t}+${info1.name} ">
+                        <img class="good-img" th:src="${info1.imagePath}">
+                        <div class="good-title" th:if="${info1.type == 0}"> Sale </div>
+                        <div class="good-title" th:if="${info1.type == 1}">  Lend </div>
+                        <div class="good-title" th:if="${info1.type == 2}">  Exchange </div>
+                        <div class="good-title" th:if="${info1.type == 3}">  Advertisement </div>
+                        <div class="good-price">  $ [[ ${info1.price}  ]]</div>
+
+                    </div>
+                    <div class="modal fade"  th:id="${info1.name}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"> [[ ${info1.name} ]] </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="detail-container" style="text-align: center;">
+                                        <img class="good-img-item " th:src="${info1.imagePath}">
+                                        <div class="detail-right">
+                                            <div class="good-title good-title-item" th:if="${info1.type == 0}"> Sale </div>
+                                            <div class="good-title good-title-item" th:if="${info1.type == 1}">  Lend </div>
+                                            <div class="good-title good-title-item" th:if="${info1.type == 2}">  Exchange </div>
+                                            <div class="good-title good-title-item" th:if="${info1.type == 3}">  Advertisement </div>
+
+                                            <div class="good-describe-item">Publisher Id : [[ ${info1.authorId}  ]]</div>
+                                            <div class="good-describe-item">Describe: [[ ${info1.description} ]]</div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="good-price-item">$[[ ${info1.price}  ]]</div>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <a th:href="@{/pay(price=${info1.price},name=${info1.name},id=${info1.id})}">
+                                        <button type="button" class="btn btn-primary" >Pay</button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                </div>
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+        </main>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    layui.use('layedit', function(){
+        var layedit = layui.layedit
+            ,$ = layui.jquery,
+            $$ = layui.$;
+
+
+        //自定义工具栏
+        var index= layedit.build('LAY_demo2', {
+            tool: [
+
+            ]
+
+
+            ,height: 100
+        })
+
+
+
+
+        //编辑器外部操作
+
+
+        $('.layui-btn').on('click', function(){
+
+            $$("#context").attr("value",layedit.getContent(index));
+
+        });
+
+
+    });
+
+    layui.use('form', function(){
+        let form = layui.form;
+        let $ = layui.$;
+        form.render();
+
+        //监听表单的提交
+        form.on('submit(search)', function(data){
+            // var data =  {"type": $("#type").val(),"content": $("#content").val()}
+
+            $.ajax({
+                url: "/group5/good/search",
+                method: "POST",
+                // contentType : 'application/json',
+                // data: JSON.stringify(data),
+                data: data.field,
+                // dataType: "JSON",
+                success: function (res){
+                    // layer.msg("Loading..");
+                    console.log(res);
+                    $(".info").html(res)
+
+                },
+                error: function (errorMsg) {
+                    alert(JSON.stringify(errorMsg));
+                }
+            })
+
+
+            return false;
+        });
+    });
+
+</script>
+
+</body>
+</html>

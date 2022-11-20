@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>Dashboard Template for Bootstrap</title>
+    <!-- Bootstrap core CSS -->
+    <script th:src="@{/js/jquery.slim.min.js}" type="text/javascript"></script>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+<!--    <link th:href="@{/css/layui.css}" rel="stylesheet">-->
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.7/css/layui.css}" media="all">
+    <script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+    <script th:src="@{/webjars/layui/2.5.7/layui.js}" type="text/javascript"></script>
+<!--    <script th:src="@{/js/layui.js}" type="text/javascript"></script>-->
+    <script th:src="@{https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js}"></script>
+    <style type="text/css">
+        /* Chart.js */
+
+
+
+        @-webkit-keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes chartjs-render-animation {
+            from {
+                opacity: 0.99
+            }
+            to {
+                opacity: 1
+            }
+        }
+
+        .chartjs-render-monitor {
+            -webkit-animation: chartjs-render-animation 0.001s;
+            animation: chartjs-render-animation 0.001s;
+        }
+    </style>
+</head>
+
+<body>
+<div th:replace="~{commons/commons::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{commons/commons::sidebar(active='send.html')}"></div>
+
+
+        <main role="main" class="col-md-6 ml-sm-auto col-lg-8 pt-3 px-4"  >
+
+
+            <form class="layui-form" action="">
+
+                <!--隐藏域 要imgPath的值-->
+                <input type="hidden" id="message" name="message" value="">
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label" >To ：</label>
+                    <div class="layui-input-block">
+                        <input type="email" name="name" required   id="kk" lay-verify="required" placeholder="" autocomplete="off" class="layui-input" >
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">Subject</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="subject" required  lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label"> Message</label>
+                    <div class="layui-input-block" layui-input-blockstyle="margin-bottom: 20px; width: 500px;">
+                        <textarea  class="layui-textarea" id="LAY_demo2" ></textarea>
+
+
+
+
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="upload">Submit</button>
+
+                    </div>
+                </div>
+            </form>
+
+
+
+
+
+
+
+
+
+        </main>
+        <div class="col-md-2 relationship" >
+            <ul class="layui-nav layui-nav-tree layui-bg-cyan layui-inline" lay-filter="demo">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">For ALL</a>
+                    <dl  class="layui-nav-child">
+                        <dd><a href="javascript:;">SELECT ALL</a></dd>
+                        <div th:each="student:${students}" >
+                        <dd><a href="javascript:;">[[ ${student.name} ]] &nbsp; [[ ${student.email}]]</a></dd>
+                        </div>
+
+                    </dl>
+                </li>
+                <li class="layui-nav-item" th:each="club:${clubs}">
+                    <a href="javascript:;">[[ ${club.name} ]] Club</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" >SElECT [[ ${club.name} ]] ALL</a></dd>
+                        <div th:each="stu:${club.students}">
+                             <dd ><a href="javascript:;">[[ ${stu.name} ]] &nbsp; [[ ${stu.email} ]]</a></dd>
+
+
+                        </div>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a th:href="@{/send}">Clear</a>
+                </li>
+
+            </ul>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+<script th:inline="javascript">
+    layui.use('layedit', function(){
+        var layedit = layui.layedit
+            ,$ = layui.jquery,
+                $$ = layui.$;
+
+
+        //自定义工具栏
+        var index= layedit.build('LAY_demo2', {
+            tool: [ 'strong' //加粗
+                ,'italic' //斜体
+                ,'underline' //下划线
+                ,'del' //删除线
+                ,'|' //分割线
+                ,'left' //左对齐
+                ,'center' //居中对齐
+                ,'right' //右对齐
+                ,'link' //超链接
+                ,'unlink' //清除链接
+
+            ]
+
+
+            ,height: 100
+        })
+
+
+
+
+        //编辑器外部操作
+
+
+        $('.layui-btn').on('click', function(){
+
+            $$("#message").attr("value",layedit.getContent(index));
+
+        });
+
+
+    });
+
+    layui.use('form', function(){
+        let form = layui.form;
+        let $ = layui.$;
+        //监听表单的提交
+        form.on('submit(upload)', function(data){
+
+            $.ajax({
+                url: "/group5/send/test",
+                method: "post",
+                data: data.field,
+                dataType: "JSON",
+                success: function (res){
+                    if (res == 1){
+                        layer.msg("Commit Success !");
+                        setTimeout(function(){
+                            window.location.href="/group5/send";
+                        },3000)
+                    }else{
+                        layer.msg("error.")
+                    }
+                }
+            })
+
+
+            return false;
+        });
+    });
+
+
+
+        layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+        var $ = layui.$;
+        var a =document.getElementById("kk");
+
+        //监听导航点击
+        element.on('nav(demo)', function(elem){
+        //console.log(elem)
+            var clear = "Clear"
+            var club = "Club";
+            var str5 = "SElECT"
+            var str1 = "ALL"
+            var str4 ="SELECT"
+        //     var arr = str.split(' ');
+           var arr = elem.text().split(' ')
+
+            // a.value = elem.text() + ' ' +a.value;
+            var data = [[ ${students} ]];
+
+            var cData = [[ ${clubs} ]]
+
+            // var vars={};
+            //
+            // for(var k = 0;k<cData.length;k++){
+            //     var varName = 'club-'+k;
+            //     vars[varName] = cData[k].students;
+            // }
+            // console.log(vars);
+            // console.log(vars.length)
+            // console.log(vars);
+            if(!arr.includes(str1) && !arr.includes(club) && !arr.includes(clear)){
+
+                    if(!a.value.includes(arr[arr.length-1])) {
+
+                        a.value = arr[arr.length - 1] + ';' + a.value;
+                        name = "true";
+
+
+
+                    } else {
+
+
+                        if(a.value.split(';').length-1 == data.length && name == "false"){
+                            a.value = arr[arr.length - 1] + ';';
+
+                        }
+
+
+                    }
+
+
+            }else{
+
+                if(arr.includes(str4)){
+                    name = "false"
+                    a.value = '';
+                    for(var i=0;i<data.length;i++){
+                        a.value = data[i].email +";" + a.value;
+                    }
+                } else {
+                    if(arr.includes(str5)) {
+                        for(var i=0;i<cData.length;i++){
+                            if(arr[1] == cData[i].name){
+                                name = "false"
+                                a.value = '';
+                                cStu = cData[i].students;
+
+                                for(var j=0;j<cStu.length;j++){
+                                    a.value = cStu[j].email + ";" + a.value;
+                                }
+                            }
+                        }
+
+                    }
+                }
+
+
+
+            }
+
+            // layer.msg(elem.text())
+
+
+    });
+    });
+
+</script>
+
+
+
+
+
+</body>
+
+</html>

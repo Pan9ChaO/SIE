@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://49.233.183.177:8080/addressbook/register.html -->
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Regist</title>
+
+
+
+
+
+  <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+  <style>
+    .alert{
+      display: none;
+      position: fixed;
+      width: 100%;
+      top:0;
+      z-index:999;
+    }
+    .selectRadius{
+      border-radius:10rem;
+    }
+    /* 在Chrome浏览器下 */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    /* 在Firefox浏览器下 */
+    input[type="number"]{
+      -moz-appearance: textfield;
+    }
+  </style>
+
+
+</head>
+
+<body class="bg-gradient-primary">
+  <div class="alert alert-danger alert-dismissable" id="alert">
+  <button type="button" class="close" data-dismiss="alert"
+          aria-hidden="true">
+    &times;
+  </button>
+  The password is not the same ！
+</div>
+  <div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Create one !</h1>
+              </div>
+              <p style="color:red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+              <main role="main">
+              <form class="user" th:action="@{/regAddStu}" method="post" onsubmit="return check()">
+                <div class="form-group">
+                    <input type="number" class="form-control form-control-user" id="id" name="id" placeholder="id" required="">
+                </div>
+
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-user" id="pwd" name="pwd" placeholder="password">
+                </div>
+                <div class="form-group">
+                  <input type="password" class="form-control form-control-user" id="pwd2"  placeholder="check password" required="">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user"  name="name" placeholder="name" required="">
+                </div>
+                <div class="form-group">
+                  <input type="email" class="form-control form-control-user"  name="email" placeholder="email" required="">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user"  name="address" placeholder="address">
+                </div>
+
+
+
+                <div class="form-group">
+
+                  <select  class="form-control selectRadius" name="question">
+
+                      <option  th:each="ques:${questions}" th:text="${ques.getQuestionName()}" th:value="${ques.getId()}">1</option>
+
+
+                  </select>
+
+
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control form-control-user"  name="answer" placeholder="answer" required="">
+                </div>
+                 <font color="red"></font>
+                   <button type="submit" class="btn btn-primary btn-user btn-block" id="registsubmit" onClick="javascript:regist()">regist</button>
+                <hr>
+              </form>
+
+              </main>
+
+              <div class="text-center">
+                <a class="small" href="/group5/login_stu.html">Have One? login!</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+  var password = document.getElementById("pwd");
+  var repassword = document.getElementById("pwd2");
+  var alertContainer = document.getElementById("alert")
+  var submit = document.getElementById("registsubmit")
+  repassword.onblur = function () {
+    if (password.value == repassword.value) {
+      alertContainer.style.display = "none";
+    } else {
+      alertContainer.style.display = "block";
+      repassword.value=""
+    }
+  }
+
+</script>
+</body>
+</html>

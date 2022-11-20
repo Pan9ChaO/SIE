@@ -1,0 +1,27 @@
+
+
+
+mybatis:
+
+  type-aliases-package: com.fran.pojo
+
+  mapper-locations: classpath:com/fran/mapper/xml/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+#spring:
+#  mvc:
+#    static-path-pattern: /static/**
+#  web:
+#    resources:
+#      static-locations: classpath:/static/
+
+
+
+spring:
+  mail:
+    host: smtp.163.com
+    username: franmeng@163.com
+    password: UOAEJJQLCLONVCLN
+    default-encoding: utf-8
