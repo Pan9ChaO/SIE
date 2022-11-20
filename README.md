@@ -1,4 +1,4 @@
-# StudentInformationExchange
+# Student-Information-Exchange
 ### 概述
 
 代码拉下来以后，配置信息改成自己的，maven 打包，再执行数据库 sql 文件，sql 文件在 lol.sql
