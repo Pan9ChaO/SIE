@@ -17,6 +17,6 @@ maven 3.8.4
 
 mysql 5.5
 
-tomcat 8.5 (项目运行的环境是linux,所以需要将Utils类的地址改为本地tomcat文件底下的upload文件夹,upload后面一定要加 / )
+tomcat 8.5 (项目打包后的运行环境是linux,所以在windows运行时需要将Utils类的地址改为本地tomcat的webapps文件底下的upload文件夹（没有自己加）,upload后面一定要加 / )
 
 展示：http://localhost:8082/group5/
